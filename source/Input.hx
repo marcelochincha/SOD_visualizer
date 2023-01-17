@@ -1,35 +1,40 @@
 import flixel.FlxObject;
-import flixel.FlxSprite;
 import flixel.addons.ui.FlxInputText;
 import flixel.group.FlxGroup.FlxTypedGroup;
 import flixel.text.FlxText;
 import flixel.util.FlxColor;
+import haxe.ds.StringMap;
+import openfl.display.Stage;
 
 class Input extends FlxTypedGroup<FlxObject>
 {
 	public var textBox:FlxInputText;
 
-	var x10:FlxSprite;
 	var textLabel:FlxText;
 
-	override public function new(label:String, x:Float, y:Float):Void
+	var sign:Int = 1;
+
+	override public function new(label:String, initalValue:Float, x:Float, y:Float):Void
 	{
 		super();
 
-		textLabel = new FlxText(x, y - 1, 100, label);
+		textLabel = new FlxText(x, y - 1, 28, label);
 		textLabel.setFormat(AssetPaths.font__ttf, 8, FlxColor.WHITE);
 
-		textBox = new FlxInputText(x + textLabel.width + 2, y, 36, "", 13);
-		textBox.setFormat(AssetPaths.numfont__ttf, 16, FlxColor.BLACK);
+		textBox = new FlxInputText(x + textLabel.width + 2, y, 150, "", 13);
+		textBox.setFormat(AssetPaths.numfont__ttf, 16, FlxColor.BLACK, FlxTextAlign.RIGHT);
+		textBox.maxLength = 16;
+		textBox.customFilterPattern = ~/[^0-9^.-]*/g;
+		textBox.filterMode = FlxInputText.CUSTOM_FILTER;
 
-		textBox.maxLength = 5;
-		textBox.text = "1000";
+		textBox.text = Std.string(initalValue);
 
-		x10 = new FlxSprite(x + textLabel.width + 2 + textBox.width + 2, y + 2);
-		x10.loadGraphic(AssetPaths.x10__png);
-
-		add(x10);
 		add(textLabel);
 		add(textBox);
+	}
+
+	public function getValue():Float
+	{
+		return Std.parseFloat(textBox.text);
 	}
 }
