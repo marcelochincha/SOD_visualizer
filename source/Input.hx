@@ -18,7 +18,7 @@ class Input extends FlxTypedGroup<FlxObject>
 	{
 		super();
 
-		textLabel = new FlxText(x, y - 1, 28, label);
+		textLabel = new FlxText(x, y - 1, 30, label);
 		textLabel.setFormat(AssetPaths.font__ttf, 8, FlxColor.WHITE);
 
 		textBox = new FlxInputText(x + textLabel.width + 2, y, 150, "", 13);
